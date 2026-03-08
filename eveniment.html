@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Einladung zum Kaffe trinken</title>
+
+        <style>
+body{
+    text-align:center;
+    font-family:Arial;
+    background:#ffeef5;
+    overflow:hidden; /* ca inimioarele sa nu dea scroll */
+}
+
+h1{
+    margin-top:80px;
+}
+
+button{
+    padding:15px 30px;
+    font-size:18px;
+    margin:20px;
+    cursor:pointer;
+}
+
+#no{
+    position:absolute;
+}
+
+#countdown{
+    font-size:24px;
+    margin-top:20px;
+}
+
+#result{
+    display:none;
+    margin-top:40px;
+}
+
+.heart{
+    position:absolute;
+    color:red;
+    font-size:20px;
+    user-select:none;
+    pointer-events:none;
+    animation: floatUp 2s linear forwards;
+}
+
+@keyframes floatUp {
+    0% {opacity:1; transform:translateY(0px);}
+    100% {opacity:0; transform:translateY(-150px);}
+}
+</style>
+    </head>
+    <body>
+        <h1>Wollen wir zusammen einen Aperoli trinken gehen?</h1>
+        <h2>Am 16.03, um 17:00, in Bamberg</h2>
+        <button id = "yes">Ja, gerne❤️</button>
+        <button id = "no">Keine Zeit❌</button>
+
+        <div id = "countdown"></div>
+
+        <div id = "result">
+        <h2>Der Termin ist erfolgreich gespeichert!</h2>
+        <p>Ich freue mich auf unseren Zusammentreffen!</p>
+        <img src = "happy-person-55.gif" width = 300>
+        </div>
+
+        <script>
+            const noBtn = document.getElementById("no");
+
+            noBtn.addEventListener("mouseover", function(){
+                const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+                noBtn.style.left = x + "px";
+                noBtn.style.top = y + "px";
+
+                createHeart(x+10, y+10);
+            });
+
+            document.getElementById("yes").onclick = function(){
+                let counter = 3;
+                const countdown = document.getElementById("countdown");
+
+                countdown.innerHTML = "Der Termin wird gespeichert in " + counter+ "....";
+                let timer  = setInterval(function(){
+                    counter --;
+                    if (counter > 0){
+                        countdown.innerHTML = "Der Termin wird gespeichert in " + counter+ "....";
+                    }
+                    else{
+                        clearInterval(timer);
+                        countdown.innerHTML = "";
+                        document.getElementById("result").style.display = "block";
+                    }
+
+                }, 1000)
+
+            }
+
+            function createHeart(x, y){
+                const heart = document.createElement("div");
+                heart.className = "heart";
+                heart.style.left = x + "px";
+                heart.style.top = y + "px";
+                heart.innerHTML = "❤️";
+                document.body.appendChild(heart);
+
+                setTimeout(function(){
+                    heart.remove();
+                }, 2000);
+
+            }
+        </script>
+    </body>
+</html>
